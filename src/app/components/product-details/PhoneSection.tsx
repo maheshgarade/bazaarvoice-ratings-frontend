@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import StarRating from "../shared/StarRating";
 
 interface PhoneSectionProps {
   data: {
@@ -96,7 +97,7 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
             }}
           >
             <span style={{ color: "#FFD700", marginRight: "5px" }}>
-              ★ {averageOverallRating}
+              <StarRating value={averageOverallRating} />
             </span>
             <span style={{ marginLeft: "10px" }}>
               {totalReviewsCount} Reviews
