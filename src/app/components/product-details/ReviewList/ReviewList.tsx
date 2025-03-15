@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import AverageRatings from "./AverageRatings";
-import RatingSnapshot from "./RatingSnapshot";
+import { AverageRatings, RatingSnapshot } from "../ReviewList";
 
 const ReviewList = () => {
   return (

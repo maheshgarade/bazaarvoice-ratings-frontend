@@ -7,16 +7,8 @@ export default async function HomePage() {
   const { data } = await axios.get("http://localhost:3003/getProducts");
   return (
     <Box sx={{ display: "flex", gap: 2, margin: "1rem" }}>
-      {data.devices.map((review: Device, index: number) => (
-        <ProductCard
-          key={index}
-          brand={review.brand}
-          name={review.name}
-          rating={review.averageOverallRating}
-          reviewCount={review.totalReviewsCount}
-          imageUrl={review.image}
-          skuCode={review.skuCode}
-        />
+      {data.devices.map((device: Device, index: number) => (
+        <ProductCard key={index} data={device} />
       ))}
     </Box>
   );

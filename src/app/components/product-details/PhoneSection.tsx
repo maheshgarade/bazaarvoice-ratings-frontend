@@ -1,18 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { Rating } from "@mui/material";
+import { Device } from "@/types";
 
 interface PhoneSectionProps {
-  data: {
-    brand: string;
-    name: string;
-    skuCode: string;
-    image: string;
-    averageOverallRating: number;
-    totalReviewsCount: number;
-    networkTechnology: string;
-    backgroundImages: string;
-  };
+  data: Device;
 }
 
 const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
@@ -46,7 +38,7 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
           position: "relative",
           height: "250px",
           width: "100%",
-          backgroundImage: `url(${backgroundImages})`,
+          backgroundImage: `url(${backgroundImages.Large})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

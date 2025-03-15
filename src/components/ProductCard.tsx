@@ -11,28 +11,35 @@ import {
   Button,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { Device } from "@/types";
+import { useAppContext } from "@/app/context";
 
-interface MobileCardProps {
-  brand: string;
-  name: string;
-  rating: number;
-  reviewCount: number;
-  imageUrl: string;
-  skuCode: string;
+interface ProductCardProps {
+  data: Device;
 }
 
-const ProductCard: React.FC<MobileCardProps> = ({
-  brand,
-  name,
-  rating,
-  imageUrl,
-  skuCode,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
+  const {
+    brand,
+    name,
+    skuCode,
+    image,
+    averageOverallRating,
+    totalReviewsCount,
+    networkTechnology,
+    backgroundImages,
+  } = data;
+
   const router = useRouter();
+  const { setProductData } = useAppContext();
 
   const handleClick = () => {
+    setProductData(data);
     router.push(`/product-details/${skuCode}`);
   };
+
+  console.log(averageOverallRating);
+  console.log(backgroundImages);
 
   return (
     <Card
@@ -59,7 +66,7 @@ const ProductCard: React.FC<MobileCardProps> = ({
       <CardMedia
         component="img"
         height="140"
-        image={imageUrl}
+        image={image}
         alt={`${name} image`}
         sx={{ zIndex: 2, position: "relative" }}
       />
@@ -88,7 +95,7 @@ const ProductCard: React.FC<MobileCardProps> = ({
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
           <Rating
-            value={rating}
+            value={totalReviewsCount}
             precision={0.1}
             readOnly
             sx={{
@@ -114,7 +121,7 @@ const ProductCard: React.FC<MobileCardProps> = ({
             },
           }}
         >
-          5G SA
+          {networkTechnology}
         </Button>
       </CardContent>
     </Card>
