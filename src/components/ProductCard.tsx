@@ -87,7 +87,15 @@ const ProductCard: React.FC<MobileCardProps> = ({
           {name}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-          <Rating value={rating} precision={0.1} readOnly />
+          <Rating
+            value={rating}
+            precision={0.1}
+            readOnly
+            sx={{
+              "& .MuiRating-iconFilled": { color: "#e8733b" },
+              "& .MuiRating-iconEmpty": { color: "#e8733b" },
+            }}
+          />
         </Box>
         <Button
           variant="contained"
