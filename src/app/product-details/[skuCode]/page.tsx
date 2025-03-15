@@ -1,5 +1,11 @@
 import axios from "axios";
-import { ReviewWithPhoto } from "@/types";
+import {
+  FeaturedReviews,
+  OverallRating,
+  ReviewWithImages,
+} from "@/app/components/product-details";
+import PhoneSection from "@/app/components/product-details/PhoneSection";
+import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
 
 export default async function ProductDetails({
   params,
@@ -26,8 +32,9 @@ export default async function ProductDetails({
     const imageReviews = imageReviewsResponse.data.data[0];
     const reviewList = reviewListResponse.data.data[0];
 
-    console.log("L32", imageReviews);
-    console.log("L33", reviewList);
+    console.log("L35", featuredReviews);
+    console.log("L36", imageReviews);
+    console.log("L37", reviewList);
 
     if (!reviewList) {
       return <div>Reviews not found</div>;
@@ -35,37 +42,11 @@ export default async function ProductDetails({
 
     return (
       <div>
-        <h1>Reviews</h1>
-        <br />
-        <hr />
-        <br />
-        <div>
-          <h2>Featured Review</h2>
-          <div>{featuredReviews.rating}</div>
-          <div>{featuredReviews.userName}</div>
-          <div>{featuredReviews.lastModificationTime}</div>
-        </div>
-
-        <br />
-        <hr />
-        <br />
-        <div>
-          <h2>Review with Images</h2>
-          {imageReviews.imageReviews.map(
-            (imageReview: ReviewWithPhoto, index: number) => {
-              return <div key={index}>{index + 1}</div>;
-            }
-          )}
-        </div>
-        <br />
-        <hr />
-        <br />
-        <div>
-          <h2>List of Reviews</h2>
-        </div>
-        <br />
-        <hr />
-        <br />
+        <PhoneSection />
+        <OverallRating />
+        <FeaturedReviews />
+        <ReviewWithImages />
+        <ReviewList />
       </div>
     );
   } catch (error) {
