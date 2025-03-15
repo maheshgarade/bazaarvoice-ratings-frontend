@@ -87,7 +87,7 @@ const ProductCard: React.FC<MobileCardProps> = ({
           {name}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-          <Rating value={rating} readOnly />
+          <Rating value={rating} precision={0.1} readOnly />
         </Box>
         <Button
           variant="contained"

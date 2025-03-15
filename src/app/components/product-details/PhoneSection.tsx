@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import StarRating from "../shared/StarRating";
+import { Rating } from "@mui/material";
 
 interface PhoneSectionProps {
   data: {
@@ -97,7 +97,7 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
             }}
           >
             <span style={{ color: "#FFD700", marginRight: "5px" }}>
-              <StarRating value={averageOverallRating} />
+              <Rating value={averageOverallRating} precision={0.1} readOnly />
             </span>
             <span style={{ marginLeft: "10px" }}>
               {totalReviewsCount} Reviews
