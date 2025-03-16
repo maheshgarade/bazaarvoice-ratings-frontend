@@ -42,13 +42,13 @@ export interface Photo {
 
 export interface FeaturedReview {
   rating: number;
+  userName: string;
+  lastModificationTime: string;
   ratingRange: number;
   originallyPostedByLabel: string;
   secondaryRatings: unknown[];
   photos: unknown[];
   id: number;
-  userName: string;
-  lastModificationTime: string;
   title?: string;
   cardText: string;
   negativeFeedbackCount: number;

@@ -12,6 +12,7 @@ import PhoneSection from "@/app/components/product-details/PhoneSection";
 import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
 import { useAppContext } from "@/app/context/AppContext";
 import { FeaturedReview, Review, ReviewWithPhoto } from "@/types";
+import { Divider } from "@mui/material";
 
 interface ReviewData {
   featuredReviews: FeaturedReview;
@@ -108,14 +109,14 @@ const ProductDetails = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "608px 584px", // Set the widths of the columns
+            gridTemplateColumns: "38rem 36.5rem", // Set the widths of the columns
             gridColumnGap: "22px",
             padding: "0 22px",
             width: "1280px",
             margin: "0 auto",
           }}
         >
-          <div style={{ width: "608px" }}>
+          <div style={{ width: "38rem" }}>
             <OverallRating
               data={{
                 authenticImagePath: productData.authenticImagePath,
@@ -127,11 +128,21 @@ const ProductDetails = () => {
             />
           </div>
           <div
-            style={{ width: "584px", display: "flex", flexDirection: "column" }}
+            style={{
+              width: "36.5rem",
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "24px",
+            }}
           >
             <div style={{ flex: "1" }}>
-              <FeaturedReviews />
+              <FeaturedReviews data={reviewData.featuredReviews} />
             </div>
+            <Divider
+              sx={{ margin: "48px 0" }}
+              orientation="horizontal"
+              flexItem
+            />
             <div style={{ flex: "1" }}>
               <ReviewWithImages />
             </div>
