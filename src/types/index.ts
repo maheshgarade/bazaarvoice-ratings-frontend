@@ -14,28 +14,13 @@ export interface Device {
   authenticImagePath: string;
 }
 
-export interface Review {
-  brand: string;
-  name: string;
-  image: string;
-  averageOverallRating: number;
-  totalReviewsCount: number;
-  featuredReview: FeaturedReview[];
-  imageReviews: ReviewWithPhoto;
-  overallRatingRange: number;
-}
-
 export interface photoReview {
   rating: number;
   ratingRange: number;
   userName: string;
   lastModificationTime: string;
   cardText: string;
-  secondaryRatings: Array<{
-    name: string;
-    value: number;
-    valueRange: number;
-  }>;
+  secondaryRatings: SecondaryAverageRating[];
 }
 
 export interface ReviewWithPhoto {
@@ -53,16 +38,16 @@ export interface Photo {
   };
 }
 
-export interface FeaturedReview {
+export interface Review {
   rating: number;
   userName: string;
-  lastModificationTime: string;
+  lastModificationTime?: string;
   ratingRange: number;
-  originallyPostedByLabel: string;
+  originallyPostedByLabel?: string;
   secondaryRatings: unknown[];
   photos: unknown[];
   id: number;
-  title?: string;
+  title: string;
   cardText: string;
   negativeFeedbackCount: number;
   positiveFeedbackCount: number;
@@ -74,4 +59,34 @@ export interface Rating {
   averageOverallRating: number;
   overallRatingRange: number;
   title: string;
+}
+
+export interface SecondaryAverageRating {
+  name: string;
+  value: number;
+  valueRange: number;
+}
+
+export interface FeaturedReview {
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  data: Review[];
+}
+
+export interface ReviewList {
+  skuCode: string;
+  limit: number;
+  offset: number;
+  totalReviewsCount: number;
+  overallRatingRange: number;
+  reviews: Review[];
+  ratingDistributions: RatingDistribution[];
+  secondaryAverageRatings: SecondaryAverageRating[];
+  hasErrors: boolean;
+}
+
+export interface RatingDistribution {
+  ratingValue: number;
+  count: number;
 }

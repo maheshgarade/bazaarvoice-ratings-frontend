@@ -9,15 +9,16 @@ import {
   ReviewWithImages,
 } from "@/app/components/product-details";
 import PhoneSection from "@/app/components/product-details/PhoneSection";
-import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
+// import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
 import { useAppContext } from "@/app/context/AppContext";
-import { FeaturedReview, Review, ReviewWithPhoto } from "@/types";
-import { Divider } from "@mui/material";
+import { ReviewWithPhoto, ReviewList as ReviewListType, Review } from "@/types";
+import { Divider, Typography } from "@mui/material";
+import { ReviewList } from "@/app/components/product-details/ReviewList";
 
 interface ReviewData {
-  featuredReviews: FeaturedReview;
+  featuredReviews: Review;
   imageReviews: ReviewWithPhoto[];
-  reviewList: Review;
+  reviewList: ReviewListType;
 }
 
 const ProductDetails = () => {
@@ -78,7 +79,7 @@ const ProductDetails = () => {
     return <div>Loading reviews...</div>;
   }
 
-  console.log("reviewData", reviewData.imageReviews);
+  console.log("featuredReviews", reviewData.featuredReviews);
 
   return (
     <div>
@@ -138,6 +139,19 @@ const ProductDetails = () => {
             }}
           >
             <div style={{ flex: "1" }}>
+              <Typography
+                sx={{
+                  fontSize: "24px",
+                  lineHeight: "32px",
+                  fontFamily:
+                    "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  color: "#00008c",
+                }}
+              >
+                Featured review
+              </Typography>
               <FeaturedReviews data={reviewData.featuredReviews} />
             </div>
             <Divider
@@ -151,7 +165,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <ReviewList />
+      <ReviewList data={reviewData.reviewList} />
     </div>
   );
 };
