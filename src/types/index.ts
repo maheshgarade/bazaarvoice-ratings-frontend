@@ -1,22 +1,17 @@
-export interface DifferentSizeImages {
-  XSmall: string;
-  Small: string;
-  Medium: string;
-  Large: string;
-}
 export interface Device {
   brand: string;
   name: string;
-  ProductId?: string;
+  ProductId: string;
   defaultOfferingCode?: string;
-  skuCode?: string;
+  skuCode: string;
   averageRating?: number;
   image: string;
-  previewImage?: string;
-  averageOverallRating?: number;
-  totalReviewsCount?: number;
-  networkTechnology?: string;
-  backgroundImages: DifferentSizeImages;
+  previewImage: string;
+  averageOverallRating: number;
+  totalReviewsCount: number;
+  networkTechnology: string;
+  backgroundImages: string;
+  authenticImagePath: string;
 }
 
 export interface Review {
@@ -27,6 +22,7 @@ export interface Review {
   totalReviewsCount: number;
   featuredReview: FeaturedReview[];
   imageReviews: ReviewWithPhoto;
+  overallRatingRange: number;
 }
 
 export interface ReviewWithPhoto {

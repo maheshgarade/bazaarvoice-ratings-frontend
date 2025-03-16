@@ -19,15 +19,6 @@ interface ReviewData {
   reviewList: Review;
 }
 
-const tempOverallRatingData = {
-  authenticImagePath:
-    "https://econtent.o2.co.uk/documents/portlet_file_entry/20127/authentic-review.png/c5e0d8d4-015e-d4c1-e65b-05de08596922",
-  totalReviewsCount: 21570,
-  averageOverallRating: 4.9,
-  overallRatingRange: 5,
-  title: "Overall rating",
-};
-
 const ProductDetails = () => {
   const params = useParams(); // `params` is now retrieved using this hook
   const skuCode = params?.skuCode; // Safely access skuCode
@@ -125,7 +116,15 @@ const ProductDetails = () => {
           }}
         >
           <div style={{ width: "608px" }}>
-            <OverallRating data={tempOverallRatingData} />
+            <OverallRating
+              data={{
+                authenticImagePath: productData.authenticImagePath,
+                totalReviewsCount: productData.totalReviewsCount,
+                averageOverallRating: productData.averageOverallRating,
+                overallRatingRange: reviewData.reviewList.overallRatingRange,
+                title: "Overall rating",
+              }}
+            />
           </div>
           <div
             style={{ width: "584px", display: "flex", flexDirection: "column" }}

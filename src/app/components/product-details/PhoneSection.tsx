@@ -38,7 +38,7 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
           position: "relative",
           height: "250px",
           width: "100%",
-          backgroundImage: `url(${backgroundImages.Large})`,
+          backgroundImage: `url(${backgroundImages})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
