@@ -13,6 +13,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { ReviewWithPhoto } from "@/types";
 import { CustomPrevArrow, CustomNextArrow } from "./CustomArrows"; // Import arrows
+import styles from "./ReviewWithImages.module.css"; // Import the CSS module
 
 interface ReviewWithImagesProp {
   data: ReviewWithPhoto[];
@@ -62,23 +63,22 @@ const ReviewWithImages: React.FC<ReviewWithImagesProp> = ({ data }) => {
     <Box sx={{ padding: 2 }}>
       <Slider {...settings}>
         {data.map((review, index) => (
-          <div
+          <Box
             key={index}
+            className={styles.thumbnailBox}
             onClick={() => openModal(review)}
-            style={{ cursor: "pointer", padding: "0 8px" }}
           >
             <Image
               src={review.photo.sizes.thumbnail}
               alt={`Review by ${review.review.userName}`}
-              width={100}
-              height={100}
-              style={{ borderRadius: 8 }}
+              width={150}
+              height={150}
+              style={{ objectFit: "cover" }}
             />
-          </div>
+          </Box>
         ))}
       </Slider>
 
-      {/* Modal Implementation */}
       <Dialog open={isModalOpen} onClose={closeModal} maxWidth="md" fullWidth>
         {selectedReview && (
           <>

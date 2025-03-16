@@ -11,7 +11,7 @@ interface CustomArrowProps {
 const CustomPrevArrow = (props: CustomArrowProps) => {
   const { className, onClick } = props;
   return (
-    <div className={className} onClick={onClick} style={{ color: "blue" }}>
+    <div className={className} onClick={onClick} style={{ color: "#0050ff" }}>
       <ArrowBackIosIcon fontSize="large" />
     </div>
   );
@@ -20,7 +20,7 @@ const CustomPrevArrow = (props: CustomArrowProps) => {
 const CustomNextArrow = (props: CustomArrowProps) => {
   const { className, onClick } = props;
   return (
-    <div className={className} onClick={onClick} style={{ color: "blue" }}>
+    <div className={className} onClick={onClick} style={{ color: "#0050ff" }}>
       <ArrowForwardIosIcon fontSize="large" />
     </div>
   );

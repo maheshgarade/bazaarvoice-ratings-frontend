@@ -62,7 +62,17 @@
   font-size: 24px; /* Make them bigger if needed */
 }
 
-.slick-prev,
-.slick-next {
-  z-index: 1; /* Ensure arrows are above other content */
+:global(.slick-prev),
+:global(.slick-next) {
+  top: 90% !important;
+  /* width: 50px !important; */
+}
+
+.thumbnailBox {
+  width: 150px;
+  height: 150px;
+  margin-right: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-block;
 }
