@@ -25,9 +25,22 @@ export interface Review {
   overallRatingRange: number;
 }
 
+export interface photoReview {
+  rating: number;
+  ratingRange: number;
+  userName: string;
+  lastModificationTime: string;
+  cardText: string;
+  secondaryRatings: Array<{
+    name: string;
+    value: number;
+    valueRange: number;
+  }>;
+}
+
 export interface ReviewWithPhoto {
   photo: Photo;
-  review: Review;
+  review: photoReview;
 }
 
 export interface Photo {

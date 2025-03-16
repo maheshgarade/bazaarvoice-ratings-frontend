@@ -16,7 +16,7 @@ import { Divider } from "@mui/material";
 
 interface ReviewData {
   featuredReviews: FeaturedReview;
-  imageReviews: ReviewWithPhoto;
+  imageReviews: ReviewWithPhoto[];
   reviewList: Review;
 }
 
@@ -49,7 +49,7 @@ const ProductDetails = () => {
 
         setReviewData({
           featuredReviews: featuredReviewsResponse.data.data[0],
-          imageReviews: imageReviewsResponse.data.data[0],
+          imageReviews: imageReviewsResponse.data.data[0].imageReviews,
           reviewList: reviewListResponse.data.data[0],
         });
       } catch (err) {
@@ -77,6 +77,8 @@ const ProductDetails = () => {
   if (!reviewData) {
     return <div>Loading reviews...</div>;
   }
+
+  console.log("reviewData", reviewData.imageReviews);
 
   return (
     <div>
@@ -144,7 +146,7 @@ const ProductDetails = () => {
               flexItem
             />
             <div style={{ flex: "1" }}>
-              <ReviewWithImages />
+              <ReviewWithImages data={reviewData.imageReviews} />
             </div>
           </div>
         </div>
