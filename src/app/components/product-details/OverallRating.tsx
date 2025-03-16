@@ -33,10 +33,10 @@ const OverallRating: React.FC<OverallRatingProps> = ({ data }) => {
       </p>
 
       {/* Rating Value */}
-      <p>
+      <p style={{ marginTop: "24px" }}>
         <strong
           className="ratings__value-actual"
-          style={{ fontSize: "80px", lineHeight: "60px", marginTop: "24px" }}
+          style={{ fontSize: "80px", lineHeight: "60px" }}
         >
           {averageOverallRating}
         </strong>{" "}
