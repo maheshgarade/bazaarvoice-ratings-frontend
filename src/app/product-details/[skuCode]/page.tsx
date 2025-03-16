@@ -80,9 +80,56 @@ const ProductDetails = () => {
   return (
     <div>
       <PhoneSection data={productData} />
-      <OverallRating />
-      <FeaturedReviews />
-      <ReviewWithImages />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          background: "#fff",
+          height: "45rem",
+          width: "100%",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            padding: "24px 0",
+            margin: 0,
+            fontFamily:
+              "Frutiger LT Std 45 Light, Helvetica, Arial, sans-serif",
+            fontStyle: "normal",
+            fontWeight: 400,
+            fontSize: "48px",
+            lineHeight: "56px",
+            color: "#00008c",
+          }}
+        >
+          Reviews
+        </h2>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "608px 584px", // Set the widths of the columns
+            gridColumnGap: "22px",
+            padding: "0 22px",
+            width: "1280px",
+            margin: "0 auto",
+          }}
+        >
+          <div style={{ width: "608px" }}>
+            <OverallRating />
+          </div>
+          <div
+            style={{ width: "584px", display: "flex", flexDirection: "column" }}
+          >
+            <div style={{ flex: "1" }}>
+              <FeaturedReviews />
+            </div>
+            <div style={{ flex: "1" }}>
+              <ReviewWithImages />
+            </div>
+          </div>
+        </div>
+      </div>
       <ReviewList />
     </div>
   );
