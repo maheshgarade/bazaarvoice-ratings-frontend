@@ -58,3 +58,11 @@ export interface FeaturedReview {
   negativeFeedbackCount: number;
   positiveFeedbackCount: number;
 }
+
+export interface Rating {
+  authenticImagePath: string;
+  totalReviewsCount: number;
+  averageOverallRating: number;
+  overallRatingRange: number;
+  title: string;
+}
