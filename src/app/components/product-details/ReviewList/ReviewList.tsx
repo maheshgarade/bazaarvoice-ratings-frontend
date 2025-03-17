@@ -8,7 +8,6 @@ interface ReviewListProps {
   data: ReviewListType;
 }
 const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
-  console.log("L11 data ", data);
   return (
     <Box
       sx={{
@@ -22,7 +21,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
     >
       <Box sx={{ gridColumn: "1 / span 3" }}>
         <Box>
-          <AverageRatings></AverageRatings>
+          <AverageRatings data={data.secondaryAverageRatings} />
         </Box>
         <Box>
           <RatingSnapshot></RatingSnapshot>

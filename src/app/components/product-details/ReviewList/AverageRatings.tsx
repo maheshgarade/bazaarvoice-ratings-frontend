@@ -1,30 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import SecondaryRating from "../../shared/SecondaryRating";
+import { SecondaryAverageRating } from "@/types";
 
-const secondaryAverageRatings = [
-  {
-    name: "BatteryLife",
-    value: 1,
-    valueRange: 5,
-  },
-  {
-    name: "Camera",
-    value: 2,
-    valueRange: 5,
-  },
-  {
-    name: "EaseOfUse",
-    value: 4,
-    valueRange: 5,
-  },
-  {
-    name: "ScreenQuality",
-    value: 3,
-    valueRange: 5,
-  },
-];
+interface AverageRatingsProps {
+  data: SecondaryAverageRating[];
+}
 
-const AverageRatings = () => {
+const AverageRatings: React.FC<AverageRatingsProps> = ({ data }) => {
   return (
     <Box>
       <Typography
@@ -41,7 +23,7 @@ const AverageRatings = () => {
         Average ratings
       </Typography>
       <Box>
-        {secondaryAverageRatings.map((rating, index) => {
+        {data.map((rating, index) => {
           return (
             <SecondaryRating
               key={index}
