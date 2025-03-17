@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { AverageRatings, RatingSnapshot } from "../ReviewList";
 import { Review as ReviewType, ReviewList as ReviewListType } from "@/types";
 import Review from "../../shared/Review";
@@ -23,7 +23,35 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
         <Box>
           <AverageRatings data={data.secondaryAverageRatings} />
         </Box>
-        <Box>
+        <Box sx={{ marginTop: "64px" }}>
+          <Typography
+            sx={{
+              fontFamily:
+                "Frutiger LT Std 45 Light, Helvetica, Arial, sans-serif",
+              fontStyle: "normal",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "32px",
+              marginBottom: "24px",
+              color: "#00008c",
+            }}
+          >
+            Ratings snapshot
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "16px",
+              lineHeight: "24px",
+              color: "#00008c",
+              marginBottom: "24px",
+              fontFamily:
+                "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
+              fontStyle: "normal",
+              fontWeight: 500,
+            }}
+          >
+            Filter reviews by overall rating
+          </Typography>
           <RatingSnapshot></RatingSnapshot>
         </Box>
       </Box>
