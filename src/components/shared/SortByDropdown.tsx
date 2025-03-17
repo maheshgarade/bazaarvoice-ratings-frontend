@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -8,7 +8,7 @@ import {
   Box,
   SelectChangeEvent,
 } from "@mui/material";
-// import CustomDropdownIcon from "./CustomDropdownIcon";
+import { DownChevronIcon, UpChevronIcon } from "./CustomDropdownIcon";
 
 interface SortByDropdownProps {
   selectedOption: string; // The currently selected dropdown value
@@ -19,6 +19,7 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
   selectedOption,
   onChange,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Box sx={{ minWidth: 240 }}>
       <FormControl fullWidth>
@@ -30,9 +31,14 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
           value={selectedOption}
           onChange={onChange}
           label="Sort by"
+          onOpen={() => setIsOpen(true)}
+          onClose={() => setIsOpen(false)}
           sx={{
             color: "#00008c",
           }}
+          IconComponent={() =>
+            isOpen ? <UpChevronIcon /> : <DownChevronIcon />
+          }
         >
           {/* Group: Sort By */}
 
