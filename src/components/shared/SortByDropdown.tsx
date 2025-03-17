@@ -8,6 +8,7 @@ import {
   Box,
   SelectChangeEvent,
 } from "@mui/material";
+// import CustomDropdownIcon from "./CustomDropdownIcon";
 
 interface SortByDropdownProps {
   selectedOption: string; // The currently selected dropdown value
@@ -29,7 +30,9 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
           value={selectedOption}
           onChange={onChange}
           label="Sort by"
-          sx={{ color: "#00008c" }}
+          sx={{
+            color: "#00008c",
+          }}
         >
           {/* Group: Sort By */}
 
