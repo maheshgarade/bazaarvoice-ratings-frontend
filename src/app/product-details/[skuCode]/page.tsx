@@ -79,7 +79,7 @@ const ProductDetails = () => {
     return <div>Loading reviews...</div>;
   }
 
-  console.log("featuredReviews", reviewData.featuredReviews);
+  // console.log("reviewList", reviewData.reviewList);
 
   return (
     <div>

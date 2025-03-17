@@ -1,22 +1,18 @@
 import { Box } from "@mui/material";
 import RatingCheckbox from "../../shared/RatingCheckbox";
+import { RatingDistribution } from "@/types";
 
-// Rating data
-const ratingData = [
-  { ratingValue: 5, count: 20021 },
-  { ratingValue: 4, count: 1383 },
-  { ratingValue: 3, count: 163 },
-  { ratingValue: 2, count: 27 },
-  { ratingValue: 1, count: 87 },
-];
+interface RatingSnapshotProps {
+  data: RatingDistribution[];
+}
 
-// Calculate total ratings count
-const totalRatings = ratingData.reduce((acc, rating) => acc + rating.count, 0);
+const RatingSnapshot: React.FC<RatingSnapshotProps> = ({ data }) => {
+  // Calculate total ratings count
+  const totalRatings = data.reduce((acc, rating) => acc + rating.count, 0);
 
-const RatingSnapshot = () => {
   return (
     <Box>
-      {ratingData.map((rating) => {
+      {data.map((rating) => {
         const progress = (rating.count / totalRatings) * 100;
         return (
           <RatingCheckbox

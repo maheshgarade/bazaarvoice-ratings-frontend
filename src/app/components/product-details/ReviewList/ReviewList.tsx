@@ -52,7 +52,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
           >
             Filter reviews by overall rating
           </Typography>
-          <RatingSnapshot></RatingSnapshot>
+          <RatingSnapshot data={data.ratingDistributions}></RatingSnapshot>
         </Box>
       </Box>
       <Box sx={{ gridColumn: "5 / span 8", margin: 0 }}>

@@ -90,8 +90,3 @@ export interface RatingDistribution {
   ratingValue: number;
   count: number;
 }
-
-export interface RatingCheckbox {
-  ratingValue: number;
-  count: number;
-}
