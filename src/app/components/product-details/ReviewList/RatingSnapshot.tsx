@@ -10,9 +10,12 @@ const RatingSnapshot: React.FC<RatingSnapshotProps> = ({ data }) => {
   // Calculate total ratings count
   const totalRatings = data.reduce((acc, rating) => acc + rating.count, 0);
 
+  // Sort the data in descending order of ratingValue
+  const sortedData = [...data].sort((a, b) => b.ratingValue - a.ratingValue);
+
   return (
     <Box>
-      {data.map((rating) => {
+      {sortedData.map((rating) => {
         const progress = (rating.count / totalRatings) * 100;
         return (
           <RatingCheckbox
