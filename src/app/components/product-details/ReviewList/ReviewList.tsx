@@ -1,13 +1,22 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, SelectChangeEvent, Typography } from "@mui/material";
 import { AverageRatings, RatingSnapshot } from "../ReviewList";
 import { Review as ReviewType, ReviewList as ReviewListType } from "@/types";
 import Review from "../../shared/Review";
+import SortByDropdown from "@/components/shared/SortByDropdown";
+import { useState } from "react";
 // import SecondaryRating from "../../shared/SecondaryRating";
 
 interface ReviewListProps {
   data: ReviewListType;
 }
 const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
+  const [selectedOption, setSelectedOption] = useState("mostRecent");
+
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    setSelectedOption(event.target.value as string); // Update the selected option
+    console.log("Selected Option:", event.target.value);
+  };
+
   return (
     <Box
       sx={{
@@ -19,10 +28,14 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
         margin: "0 auto",
       }}
     >
+      {/* Average Ratings & Rating Snapshot */}
       <Box sx={{ gridColumn: "1 / span 3" }}>
+        {/* Average Ratings */}
         <Box>
           <AverageRatings data={data.secondaryAverageRatings} />
         </Box>
+
+        {/* Rating Snapshot */}
         <Box sx={{ marginTop: "64px" }}>
           <Typography
             sx={{
@@ -55,27 +68,41 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
           <RatingSnapshot data={data.ratingDistributions}></RatingSnapshot>
         </Box>
       </Box>
+
+      {/* Sort by & Review List */}
       <Box sx={{ gridColumn: "5 / span 8", margin: 0 }}>
-        <Box sx={{ height: "71px" }}>Sort by</Box>
-        {data.reviews.map((review: ReviewType, index: number) => {
-          return (
-            <Box key={index} sx={{}}>
-              <Review
-                rating={review.rating}
-                userName={review.userName}
-                lastModificationTime={review.lastModificationTime}
-                originallyPostedByLabel={review.originallyPostedByLabel}
-                title={review.title}
-                cardText={review.cardText}
-              />
-              <Divider
-                sx={{ margin: "48px 0" }}
-                orientation="horizontal"
-                flexItem
-              />
-            </Box>
-          );
-        })}
+        {/* Sort by     */}
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ minHeight: "71px", width: "284px" }}>
+            <SortByDropdown
+              selectedOption={selectedOption}
+              onChange={handleChange}
+            />
+          </Box>
+        </Box>
+
+        <Box>
+          {/* Review List     */}
+          {data.reviews.map((review: ReviewType, index: number) => {
+            return (
+              <Box key={index} sx={{}}>
+                <Review
+                  rating={review.rating}
+                  userName={review.userName}
+                  lastModificationTime={review.lastModificationTime}
+                  originallyPostedByLabel={review.originallyPostedByLabel}
+                  title={review.title}
+                  cardText={review.cardText}
+                />
+                <Divider
+                  sx={{ margin: "48px 0" }}
+                  orientation="horizontal"
+                  flexItem
+                />
+              </Box>
+            );
+          })}
+        </Box>
       </Box>
     </Box>
   );
