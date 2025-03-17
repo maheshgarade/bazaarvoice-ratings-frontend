@@ -12,34 +12,37 @@ const SecondaryRating: React.FC<SecondaryRatingProps> = ({
   value,
   valueRange,
 }) => {
+  const segments = 5; // Total number of bars
+  const gap = 5; // Gap between bars in pixels
+  const totalWidth = 292.5; // Total width of the component
+  const barWidth = (totalWidth - gap * (segments - 1)) / segments; // Width of each bar
+
+  // Calculate filled bars
+  const filledSegments = Math.round((value / valueRange) * segments);
+
   return (
     <Box sx={{ marginBottom: 2 }}>
       {/* Label */}
-      <Typography variant="body2" sx={{ marginBottom: 1, fontWeight: 500 }}>
+      <Typography
+        variant="body2"
+        sx={{ fontSize: "16px", marginBottom: "16px", color: "#00008c" }}
+      >
         {name}
       </Typography>
 
       {/* Rating Bar Container */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: "8px",
-          backgroundColor: "#e0e0e0",
-          borderRadius: "4px",
-          overflow: "hidden",
-          width: "100%", // Fills the available space
-        }}
-      >
-        {/* Filled Portion */}
-        <Box
-          sx={{
-            backgroundColor: "#e8733b",
-            height: "100%",
-            width: `${(value / valueRange) * 100}%`, // Calculates the percentage of the bar filled
-            transition: "width 0.3s ease",
-          }}
-        />
+      <Box sx={{ display: "flex", gap: `${gap}px` }}>
+        {[...Array(segments)].map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: `${barWidth}px`, // Dynamic bar width
+              height: "8px", // Fixed height for the bars
+              backgroundColor: index < filledSegments ? "#e8733b" : "#e0e0e0", // Filled or unfilled
+              borderRadius: "2px", // Rounded corners
+            }}
+          />
+        ))}
       </Box>
     </Box>
   );
