@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
-import { green, blue } from "@mui/material/colors";
 
 // Reusable RatingCheckbox Component
 interface RatingCheckboxProps {
@@ -29,24 +28,35 @@ const RatingCheckbox: React.FC<RatingCheckboxProps> = ({
       sx={{
         display: "flex",
         alignItems: "center",
-        border: checked ? `2px solid ${green[500]}` : `1px solid ${blue[500]}`,
-        borderRadius: 1,
+        border: checked ? `2px solid #0a8a03` : `1px solid #919191`,
+        borderRadius: "8px",
         padding: 1,
-        marginBottom: 2,
+        marginBottom: "16px",
+        height: "68px",
       }}
     >
       <Checkbox
         checked={checked}
         onChange={handleCheckboxChange}
         sx={{
-          color: checked ? green[500] : blue[500],
+          color: checked ? "#0a8a03" : "#0050ff",
           "&.Mui-checked": {
-            color: green[500],
+            color: "#0a8a03",
           },
+          "& .MuiSvgIcon-root": { fontSize: "32px" },
         }}
       />
       <Box sx={{ flexGrow: 1, marginLeft: 1 }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "14px",
+            lineHeight: "16px",
+            color: "#00008c",
+            marginBottom: "8px",
+          }}
+        >
           <Box component="span">{ratingValue} Star</Box>
           <Box component="span">{count}</Box>
         </Box>
