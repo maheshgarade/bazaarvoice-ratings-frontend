@@ -3,6 +3,7 @@ import { AverageRatings, RatingSnapshot } from "../ReviewList";
 import { Review as ReviewType, ReviewList as ReviewListType } from "@/types";
 import Review from "../../shared/Review";
 import SortByDropdown from "@/components/shared/SortByDropdown";
+import PaginationComponent from "@/components/shared/PaginationComponent";
 import { useState } from "react";
 // import SecondaryRating from "../../shared/SecondaryRating";
 
@@ -103,6 +104,12 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
             );
           })}
         </Box>
+        <PaginationComponent
+          currentPage={"1-10"}
+          totalItems={21695}
+          itemsPerPage={10}
+          onPageChange={() => {}}
+        />
       </Box>
     </Box>
   );
