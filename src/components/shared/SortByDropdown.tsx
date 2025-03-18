@@ -6,6 +6,9 @@ import {
   Select,
   ListSubheader,
   Box,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
   SelectChangeEvent,
 } from "@mui/material";
 import { DownChevronIcon, UpChevronIcon } from "./CustomDropdownIcon";
@@ -20,6 +23,24 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // State to track which radio is selected
+  const [radioValue, setRadioValue] = useState(selectedOption);
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setRadioValue(newValue); // Update radio button selection state
+    onChange({ target: { value: newValue } } as SelectChangeEvent<string>); // Update parent state
+  };
+
+  // Map the values to display labels
+  const valueToLabelMap: Record<string, string> = {
+    mostRecent: "Most Recent",
+    mostHelpful: "Most Helpful",
+    highestToLowest: "Highest to Lowest",
+    lowestToHighest: "Lowest to Highest",
+  };
+
   return (
     <Box sx={{ minWidth: 240 }}>
       <FormControl fullWidth>
@@ -28,7 +49,7 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
         </InputLabel>
         <Select
           labelId="sort-and-rating-label"
-          value={selectedOption}
+          value={radioValue}
           onChange={onChange}
           label="Sort by"
           onOpen={() => setIsOpen(true)}
@@ -39,41 +60,25 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
           IconComponent={() =>
             isOpen ? <UpChevronIcon /> : <DownChevronIcon />
           }
+          renderValue={(selected) => valueToLabelMap[selected] || ""}
         >
           {/* Group: Sort By */}
-
-          <MenuItem
-            value="mostRecent"
-            sx={{
-              fontSize: "16px",
-              letterSpacing: "0",
-              lineHeight: "24px",
-              color: "#00008c",
-              fontFamily:
-                "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 500,
-            }}
-          >
-            Most Recent
-          </MenuItem>
-          <MenuItem
-            value="mostHelpful"
-            sx={{
-              fontSize: "16px",
-              letterSpacing: "0",
-              lineHeight: "24px",
-              color: "#00008c",
-              fontFamily:
-                "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 500,
-            }}
-          >
-            Most Helpful
+          <MenuItem disableRipple>
+            <RadioGroup value={radioValue} onChange={handleRadioChange}>
+              <FormControlLabel
+                value="mostRecent"
+                control={<Radio sx={{ color: "#00008c" }} />}
+                label="Most Recent"
+              />
+              <FormControlLabel
+                value="mostHelpful"
+                control={<Radio sx={{ color: "#00008c" }} />}
+                label="Most Helpful"
+              />
+            </RadioGroup>
           </MenuItem>
 
-          {/* Group: Rating */}
+          {/* Divider */}
           <ListSubheader
             sx={{
               fontFamily:
@@ -81,39 +86,24 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({
               fontStyle: "normal",
               fontWeight: 500,
               fontSize: "16px",
+              paddingBottom: "4px",
             }}
           >
             Rating
           </ListSubheader>
-          <MenuItem
-            value="highestToLowest"
-            sx={{
-              fontSize: "16px",
-              letterSpacing: "0",
-              lineHeight: "24px",
-              color: "#00008c",
-              fontFamily:
-                "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 500,
-            }}
-          >
-            Highest to Lowest
-          </MenuItem>
-          <MenuItem
-            value="lowestToHighest"
-            sx={{
-              fontSize: "16px",
-              letterSpacing: "0",
-              lineHeight: "24px",
-              color: "#00008c",
-              fontFamily:
-                "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 500,
-            }}
-          >
-            Lowest to Highest
+          <MenuItem disableRipple>
+            <RadioGroup value={radioValue} onChange={handleRadioChange}>
+              <FormControlLabel
+                value="highestToLowest"
+                control={<Radio sx={{ color: "#00008c" }} />}
+                label="Highest to Lowest"
+              />
+              <FormControlLabel
+                value="lowestToHighest"
+                control={<Radio sx={{ color: "#00008c" }} />}
+                label="Lowest to Highest"
+              />
+            </RadioGroup>
           </MenuItem>
         </Select>
       </FormControl>
