@@ -6,6 +6,8 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface AppContextProps {
   productData: Device | null;
   setProductData: (data: Device | null) => void;
+  isLoading: boolean; // Loader visibility state
+  setIsLoading: (loading: boolean) => void; // Function to control the loader
   // Add additional states here in the future
 }
 
@@ -17,9 +19,17 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [productData, setProductData] = useState<Device | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <AppContext.Provider value={{ productData, setProductData }}>
+    <AppContext.Provider
+      value={{
+        productData,
+        setProductData,
+        isLoading,
+        setIsLoading,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

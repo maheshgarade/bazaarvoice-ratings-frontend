@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Device } from "@/types";
-import { useAppContext } from "@/app/context";
+import { useAppContext } from "@/context";
 
 interface ProductCardProps {
   data: Device;

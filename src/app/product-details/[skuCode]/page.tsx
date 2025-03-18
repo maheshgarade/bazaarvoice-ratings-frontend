@@ -10,10 +10,11 @@ import {
 } from "@/app/components/product-details";
 import PhoneSection from "@/app/components/product-details/PhoneSection";
 // import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
-import { useAppContext } from "@/app/context/AppContext";
+import { useAppContext } from "@/context/AppContext";
 import { ReviewWithPhoto, ReviewList as ReviewListType, Review } from "@/types";
 import { Divider, Typography } from "@mui/material";
 import { ReviewList } from "@/app/components/product-details/ReviewList";
+import LoaderOverlay from "@/components/shared/LoaderOverlay/LoaderOverlay";
 
 interface ReviewData {
   featuredReviews: Review;
@@ -25,7 +26,7 @@ const ProductDetails = () => {
   const params = useParams(); // `params` is now retrieved using this hook
   const skuCode = params?.skuCode; // Safely access skuCode
 
-  const { productData } = useAppContext(); // Use context for product details
+  const { productData, isLoading, setIsLoading } = useAppContext(); // Use context for product details
   const [reviewData, setReviewData] = useState<ReviewData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,6 +34,7 @@ const ProductDetails = () => {
     if (!skuCode) return;
 
     const fetchReviews = async () => {
+      setIsLoading(true);
       try {
         const [
           featuredReviewsResponse,
@@ -56,27 +58,24 @@ const ProductDetails = () => {
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Error loading reviews.");
+      } finally {
+        setIsLoading(false); // Hide loader once fetching is complete
       }
     };
 
     fetchReviews();
-  }, [skuCode]); // Fetch reviews whenever skuCode changes
+  }, [skuCode, setIsLoading]); // Fetch reviews whenever skuCode changes
 
   if (!skuCode) return <div>Error: SKU Code is missing!</div>;
-
-  // Handle cases when product data is not available
-  if (!productData) {
-    return <div>Loading product details...</div>;
-  }
 
   // Handle error state
   if (error) {
     return <div>{error}</div>;
   }
 
-  // Handle loading state for review data
-  if (!reviewData) {
-    return <div>Loading reviews...</div>;
+  // Handle loading state for review data with the loader
+  if (isLoading || !reviewData || !productData) {
+    return <LoaderOverlay />;
   }
 
   // console.log("reviewList", reviewData.reviewList);
