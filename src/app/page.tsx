@@ -1,5 +1,5 @@
 import axios from "axios";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/ProductCard/ProductCard";
 import { Device } from "../types";
 import { Box } from "@mui/material";
 

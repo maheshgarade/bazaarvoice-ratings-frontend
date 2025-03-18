@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import SecondaryRating from "../../shared/SecondaryRating";
 import { SecondaryAverageRating } from "@/types";
+import SecondaryRating from "@/components/shared/SecondaryRating";
 
 interface AverageRatingsProps {
   data: SecondaryAverageRating[];

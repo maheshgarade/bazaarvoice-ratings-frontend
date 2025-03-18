@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import RatingCheckbox from "../../shared/RatingCheckbox";
 import { RatingDistribution } from "@/types";
+import RatingCheckbox from "@/components/shared/RatingCheckbox";
 
 interface RatingSnapshotProps {
   data: RatingDistribution[];

@@ -2,19 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "next/navigation"; // Hook for accessing params in client components
-import {
-  FeaturedReviews,
-  OverallRating,
-  ReviewWithImages,
-} from "@/app/components/product-details";
-import PhoneSection from "@/app/components/product-details/PhoneSection";
+import { useParams } from "next/navigation";
 // import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
 import { useAppContext } from "@/context/AppContext";
 import { ReviewWithPhoto, ReviewList as ReviewListType, Review } from "@/types";
 import { Divider, Typography } from "@mui/material";
-import { ReviewList } from "@/app/components/product-details/ReviewList";
-import LoaderOverlay from "@/components/shared/LoaderOverlay/LoaderOverlay";
+import LoaderOverlay from "@/components/shared/loader-overlay/LoaderOverlay";
+import {
+  PhoneSection,
+  OverallRating,
+  FeaturedReviews,
+  ReviewWithImages,
+} from "@/components/product-details";
+import { ReviewList } from "@/components/product-details/ReviewList";
 
 interface ReviewData {
   featuredReviews: Review;

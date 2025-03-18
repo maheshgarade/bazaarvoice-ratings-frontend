@@ -1,10 +1,10 @@
 import { Box, Divider, SelectChangeEvent, Typography } from "@mui/material";
 import { AverageRatings, RatingSnapshot } from "../ReviewList";
 import { Review as ReviewType, ReviewList as ReviewListType } from "@/types";
-import Review from "../../shared/Review";
 import SortByDropdown from "@/components/shared/SortByDropdown";
 import PaginationComponent from "@/components/shared/PaginationComponent";
 import { useState } from "react";
+import Review from "@/components/shared/Review";
 // import SecondaryRating from "../../shared/SecondaryRating";
 
 interface ReviewListProps {
