@@ -62,10 +62,10 @@
   font-size: 24px; /* Make them bigger if needed */
 }
 
-:global(.slick-prev),
-:global(.slick-next) {
+/* Add a local class alongside the global selector */
+.local-slick-container :global(.slick-prev),
+.local-slick-container :global(.slick-next) {
   top: 90% !important;
-  /* width: 50px !important; */
 }
 
 .thumbnailBox {
