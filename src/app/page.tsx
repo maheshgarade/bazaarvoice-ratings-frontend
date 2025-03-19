@@ -1,15 +1,18 @@
-import axios from "axios";
-import ProductCard from "../components/ProductCard/ProductCard";
-import { Device } from "../types";
-import { Box } from "@mui/material";
+import React from "react";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import { Device } from "@/types";
 
 export default async function HomePage() {
-  const { data } = await axios.get("http://localhost:3003/getProducts");
+  const res = await fetch("http://localhost:3003/getProducts", {
+    next: { revalidate: 86400 }, // Revalidate data every 24 hours seconds
+  });
+  const { devices } = await res.json();
+
   return (
-    <Box sx={{ display: "flex", gap: 2, margin: "1rem" }}>
-      {data.devices.map((device: Device, index: number) => (
+    <div style={{ display: "flex", gap: "16px" }}>
+      {devices.map((device: Device, index: number) => (
         <ProductCard key={index} data={device} />
       ))}
-    </Box>
+    </div>
   );
 }
