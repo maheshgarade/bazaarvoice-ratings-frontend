@@ -1,23 +1,23 @@
-import { Box, Divider, SelectChangeEvent, Typography } from "@mui/material";
-import { AverageRatings, RatingSnapshot } from "../ReviewList";
+import React from "react";
+import { Box, Divider, Typography } from "@mui/material";
+import { AverageRatings } from "./index";
 import { Review as ReviewType, ReviewList as ReviewListType } from "@/types";
-import SortByDropdown from "@/components/shared/SortByDropdown";
-import PaginationComponent from "@/components/shared/PaginationComponent";
-import { useState } from "react";
+import RatingSnapshot from "./RatingSnapshot";
 import Review from "@/components/shared/Review";
-// import SecondaryRating from "../../shared/SecondaryRating";
 
 interface ReviewListProps {
-  data: ReviewListType;
+  data: ReviewListType; // Data passed from ProductDetails
+  selectedOption: string; // Current sort option
+  onSortChange: (option: string) => void; // Sort change handler
+  onPageChange: (page: number) => void; // Pagination change handler
 }
-const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
-  const [selectedOption, setSelectedOption] = useState("mostRecent");
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    setSelectedOption(event.target.value as string); // Update the selected option
-    console.log("Selected Option:", event.target.value);
-  };
-
+const ReviewList: React.FC<ReviewListProps> = ({
+  data,
+  selectedOption,
+  onSortChange,
+  onPageChange,
+}) => {
   return (
     <Box
       sx={{
@@ -66,50 +66,75 @@ const ReviewList: React.FC<ReviewListProps> = ({ data }) => {
           >
             Filter reviews by overall rating
           </Typography>
-          <RatingSnapshot data={data.ratingDistributions}></RatingSnapshot>
+          <RatingSnapshot data={data.ratingDistributions} />
         </Box>
       </Box>
 
       {/* Sort by & Review List */}
       <Box sx={{ gridColumn: "5 / span 8", margin: 0 }}>
-        {/* Sort by     */}
+        {/* Sort by */}
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Box sx={{ minHeight: "71px", width: "284px" }}>
-            <SortByDropdown
-              selectedOption={selectedOption}
-              onChange={handleChange}
-            />
-          </Box>
+          <Typography sx={{ marginRight: "16px", alignSelf: "center" }}>
+            Sort by:
+          </Typography>
+          <select
+            value={selectedOption}
+            onChange={(e) => onSortChange(e.target.value)}
+            style={{
+              minHeight: "36px",
+              padding: "6px 12px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          >
+            <option value="mostRecent">Most Recent</option>
+            <option value="highestRated">Highest Rated</option>
+            <option value="lowestRated">Lowest Rated</option>
+          </select>
         </Box>
 
+        {/* Review List */}
         <Box>
-          {/* Review List     */}
-          {data.reviews.map((review: ReviewType, index: number) => {
-            return (
-              <Box key={index} sx={{}}>
-                <Review
-                  rating={review.rating}
-                  userName={review.userName}
-                  lastModificationTime={review.lastModificationTime}
-                  originallyPostedByLabel={review.originallyPostedByLabel}
-                  title={review.title}
-                  cardText={review.cardText}
-                />
-                <Divider
-                  sx={{ margin: "48px 0" }}
-                  orientation="horizontal"
-                  flexItem
-                />
-              </Box>
-            );
-          })}
+          {data.reviews.map((review: ReviewType, index: number) => (
+            <Box key={index}>
+              <Review
+                rating={review.rating}
+                userName={review.userName}
+                lastModificationTime={review.lastModificationTime}
+                originallyPostedByLabel={review.originallyPostedByLabel}
+                title={review.title}
+                cardText={review.cardText}
+              />
+              <Divider
+                sx={{ margin: "48px 0" }}
+                orientation="horizontal"
+                flexItem
+              />
+            </Box>
+          ))}
         </Box>
-        <PaginationComponent
-          currentPage={"1-10"}
-          totalItems={21695}
-          itemsPerPage={10}
-          onPageChange={() => {}}
-        />
+
+        {/* Pagination */}
+        <Box
+          sx={{ display: "flex", justifyContent: "center", marginTop: "24px" }}
+        >
+          <button
+            onClick={() => onPageChange(1)}
+            style={{
+              marginRight: "8px",
+              padding: "8px 16px",
+              borderRadius: "4px",
+            }}
+          >
+            Prev
+          </button>
+          <button
+            onClick={() => onPageChange(2)}
+            style={{ padding: "8px 16px", borderRadius: "4px" }}
+          >
+            Next
+          </button>
+        </Box>
       </Box>
     </Box>
   );

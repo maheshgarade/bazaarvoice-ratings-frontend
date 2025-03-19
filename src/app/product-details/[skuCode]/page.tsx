@@ -2,6 +2,7 @@ import { PhoneSection } from "@/components/product-details";
 import FeaturedReviews from "@/components/product-details/FeaturedReviews";
 import OverallRating from "@/components/product-details/OverallRating";
 import ReviewWithImages from "@/components/product-details/review-with-images/ReviewWithImages";
+import ReviewListWrapper from "@/components/product-details/ReviewList/ReviewListWrapper";
 import { Typography, Divider } from "@mui/material";
 import { cache } from "react";
 
@@ -153,7 +154,7 @@ export default async function ProductDetails({ params }: ProductDetailsProps) {
           </div>
         </div>
       </div>
-      {/* <ReviewList data={reviewData.reviewList} /> */}
+      <ReviewListWrapper data={data.reviewData.reviewList} />
     </div>
   );
 }
