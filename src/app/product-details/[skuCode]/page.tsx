@@ -1,172 +1,66 @@
-"use client";
+import { cache } from "react";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "next/navigation";
-// import ReviewList from "@/app/components/product-details/ReviewList/ReviewList";
-import { useAppContext } from "@/context/AppContext";
-import { ReviewWithPhoto, ReviewList as ReviewListType, Review } from "@/types";
-import { Divider, Typography } from "@mui/material";
-import LoaderOverlay from "@/components/shared/loader-overlay/LoaderOverlay";
-import {
-  PhoneSection,
-  OverallRating,
-  FeaturedReviews,
-  ReviewWithImages,
-} from "@/components/product-details";
-import { ReviewList } from "@/components/product-details/ReviewList";
-
-interface ReviewData {
-  featuredReviews: Review;
-  imageReviews: ReviewWithPhoto[];
-  reviewList: ReviewListType;
+interface ProductDetailsProps {
+  params: Promise<{ skuCode: string }>;
 }
 
-const ProductDetails = () => {
-  const params = useParams(); // `params` is now retrieved using this hook
-  const skuCode = params?.skuCode; // Safely access skuCode
+// ✅ Cached fetch function for ISR
+const fetchProductDetails = cache(async (skuCode: string) => {
+  const [
+    productResponse,
+    featuredReviewsResponse,
+    imageReviewsResponse,
+    reviewListResponse,
+  ] = await Promise.all([
+    fetch(`http://localhost:3003/getProductBySku?skuCode=${skuCode}`, {
+      next: { revalidate: 60 }, // ✅ ISR enabled
+    }).then((res) => res.json()),
+    fetch(
+      `http://localhost:3003/getFeaturedReviews?skuCode=${skuCode}&page=1&limit=10`,
+      { next: { revalidate: 60 } }
+    ).then((res) => res.json()),
+    fetch(
+      `http://localhost:3003/getReviewsWithImages?skuCode=${skuCode}&page=1&limit=10`,
+      { next: { revalidate: 60 } }
+    ).then((res) => res.json()),
+    fetch(`http://localhost:3003/getReviewList?skuCode=${skuCode}`, {
+      next: { revalidate: 60 },
+    }).then((res) => res.json()),
+  ]);
 
-  const { productData, isLoading, setIsLoading } = useAppContext(); // Use context for product details
-  const [reviewData, setReviewData] = useState<ReviewData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  return {
+    productData: productResponse,
+    reviewData: {
+      featuredReviews: featuredReviewsResponse.data[0],
+      imageReviews: imageReviewsResponse.data[0]?.imageReviews,
+      reviewList: reviewListResponse.data[0],
+    },
+  };
+});
 
-  useEffect(() => {
-    if (!skuCode) return;
+// ✅ Define `generateStaticParams` for ISR
+export async function generateStaticParams() {
+  const res = await fetch("http://localhost:3003/getProducts");
+  const { devices } = await res.json();
 
-    const fetchReviews = async () => {
-      setIsLoading(true);
-      try {
-        const [
-          featuredReviewsResponse,
-          imageReviewsResponse,
-          reviewListResponse,
-        ] = await Promise.all([
-          axios.get(
-            `http://localhost:3003/getFeaturedReviews?skuCode=${skuCode}&page=1&limit=10`
-          ),
-          axios.get(
-            `http://localhost:3003/getReviewsWithImages?skuCode=${skuCode}&page=1&limit=10`
-          ),
-          axios.get(`http://localhost:3003/getReviewList?skuCode=${skuCode}`),
-        ]);
+  return devices.map((device: { skuCode: string }) => ({
+    skuCode: device.skuCode,
+  }));
+}
 
-        setReviewData({
-          featuredReviews: featuredReviewsResponse.data.data[0],
-          imageReviews: imageReviewsResponse.data.data[0].imageReviews,
-          reviewList: reviewListResponse.data.data[0],
-        });
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Error loading reviews.");
-      } finally {
-        setIsLoading(false); // Hide loader once fetching is complete
-      }
-    };
+// ✅ Server Component for Product Details Page
+export default async function ProductDetails({ params }: ProductDetailsProps) {
+  const resolvedParams = await params; // ✅ Await params
+  const { skuCode } = resolvedParams; // ✅ Use resolved params
 
-    fetchReviews();
-  }, [skuCode, setIsLoading]); // Fetch reviews whenever skuCode changes
-
-  if (!skuCode) return <div>Error: SKU Code is missing!</div>;
-
-  // Handle error state
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  // Handle loading state for review data with the loader
-  if (isLoading || !reviewData || !productData) {
-    return <LoaderOverlay />;
-  }
-
-  // console.log("reviewList", reviewData.reviewList);
+  const data = await fetchProductDetails(skuCode);
 
   return (
     <div>
-      <PhoneSection data={productData} />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          background: "#fff",
-          height: "45rem",
-          width: "100%",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            padding: "24px 0",
-            margin: 0,
-            fontFamily:
-              "Frutiger LT Std 45 Light, Helvetica, Arial, sans-serif",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "48px",
-            lineHeight: "56px",
-            color: "#00008c",
-          }}
-        >
-          Reviews
-        </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "38rem 36.5rem", // Set the widths of the columns
-            gridColumnGap: "22px",
-            padding: "0 22px",
-            width: "1280px",
-            margin: "0 auto",
-          }}
-        >
-          <div style={{ width: "38rem" }}>
-            <OverallRating
-              data={{
-                authenticImagePath: productData.authenticImagePath,
-                totalReviewsCount: productData.totalReviewsCount,
-                averageOverallRating: productData.averageOverallRating,
-                overallRatingRange: reviewData.reviewList.overallRatingRange,
-                title: "Overall rating",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              width: "36.5rem",
-              display: "flex",
-              flexDirection: "column",
-              marginTop: "24px",
-            }}
-          >
-            <div style={{ flex: "1" }}>
-              <Typography
-                sx={{
-                  fontSize: "24px",
-                  lineHeight: "32px",
-                  fontFamily:
-                    "Frutiger LT Std 55 Roman, Helvetica, Arial, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 500,
-                  color: "#00008c",
-                }}
-              >
-                Featured review
-              </Typography>
-              <FeaturedReviews data={reviewData.featuredReviews} />
-            </div>
-            <Divider
-              sx={{ margin: "48px 0" }}
-              orientation="horizontal"
-              flexItem
-            />
-            <div style={{ flex: "1" }}>
-              <ReviewWithImages data={reviewData.imageReviews} />
-            </div>
-          </div>
-        </div>
-      </div>
-      <ReviewList data={reviewData.reviewList} />
+      <h1>{data.productData.name}</h1>
+      <p>Price: {data.productData.price}</p>
+      <p>{data.productData.description}</p>
+      <pre>{JSON.stringify(data.reviewData, null, 2)}</pre>
     </div>
   );
-};
-
-export default ProductDetails;
+}
