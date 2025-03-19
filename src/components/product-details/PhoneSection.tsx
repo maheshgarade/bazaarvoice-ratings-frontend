@@ -11,14 +11,13 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
   const {
     brand,
     name,
-    skuCode,
     image,
     averageOverallRating,
     totalReviewsCount,
     networkTechnology,
     backgroundImages,
   } = data;
-  console.log("PhoneSection skuCode", skuCode);
+
   return (
     <div
       style={{
@@ -58,17 +57,9 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
           top: "5%",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-          }}
-        >
-          {/* Phone Image on the Left */}
-          <div
-            style={{
-              marginRight: "40rem",
-            }}
-          >
+        <div style={{ display: "flex" }}>
+          {/* Phone Image */}
+          <div style={{ marginRight: "40rem" }}>
             <Image
               src={image}
               alt={`${brand} ${name}`}
@@ -79,8 +70,7 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({ data }) => {
               }}
             />
           </div>
-
-          {/* Text and Review Details on the Right */}
+          {/* Details */}
           <div
             style={{
               flex: "1",
