@@ -1,4 +1,5 @@
 import { PhoneSection } from "@/components/product-details";
+import FeaturedReviews from "@/components/product-details/FeaturedReviews";
 import OverallRating from "@/components/product-details/OverallRating";
 import { Typography, Divider } from "@mui/material";
 import { cache } from "react";
@@ -137,7 +138,7 @@ export default async function ProductDetails({ params }: ProductDetailsProps) {
               >
                 Featured review
               </Typography>
-              {/* <FeaturedReviews data={reviewData.featuredReviews} /> */}
+              <FeaturedReviews data={data.reviewData.featuredReviews} />
             </div>
             <Divider
               sx={{ margin: "48px 0" }}
