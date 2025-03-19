@@ -1,6 +1,7 @@
 import { PhoneSection } from "@/components/product-details";
 import FeaturedReviews from "@/components/product-details/FeaturedReviews";
 import OverallRating from "@/components/product-details/OverallRating";
+import ReviewWithImages from "@/components/product-details/review-with-images/ReviewWithImages";
 import { Typography, Divider } from "@mui/material";
 import { cache } from "react";
 
@@ -146,7 +147,8 @@ export default async function ProductDetails({ params }: ProductDetailsProps) {
               flexItem
             />
             <div style={{ flex: "1" }}>
-              {/* <ReviewWithImages data={reviewData.imageReviews} /> */}
+              {/* CRS component as it is a carousel and has to be CSR */}
+              <ReviewWithImages data={data.reviewData.imageReviews} />
             </div>
           </div>
         </div>
