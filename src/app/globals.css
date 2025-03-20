@@ -27,8 +27,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-:global(.slick-prev),
-:global(.slick-next) {
+.slick-prev,
+.slick-next {
   position: absolute;
   top: 90% !important;
   z-index: 1;
